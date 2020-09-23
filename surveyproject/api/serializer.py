@@ -36,14 +36,17 @@ class QuestionSerializer(serializers.ModelSerializer):
         fields = ['title', 'type_question']
 
 
-class AnswerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Answer
-        fields = ['question', 'answer']
-
-
 class UserAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAnswer
-        fields = ['id', 'survey', 'answers', 'is_finish']
+        fields = '__all__'
+
+        
+class AnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = '__all__'
+
+
+
 

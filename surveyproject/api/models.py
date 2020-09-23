@@ -23,9 +23,10 @@ class Survey(models.Model):
     start_date = models.DateTimeField(auto_now_add=True, blank=True)
     end_date = models.DateTimeField(auto_now=True, blank=True)
     questions = models.ManyToManyField(Question, blank=True)
-
+    
     def sorted_questions(self):
         return sorted([q.id for q in self.questions.all()])
+
     
     def __str__(self):
         return self.title

@@ -138,7 +138,7 @@ def choose_surveу(request, survey_id):
     
     user_answer = UserAnswer()
     user_answer.survey = survey
-
+    # сохраняем опрос в ответах юзера
     user_answer.save()
 
     # Теперь нужно вернуть 1 вопрос
@@ -153,6 +153,15 @@ def choose_surveу(request, survey_id):
     return Response({'user_answer': serializer_user_answer.data, 'question': serializer_quiestion.data}, status=status.HTTP_200_OK)
 
 
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_answers_list(request):
+    """ Получить список ответ """
+    answers = Answer.objects.all()
+    serializer_answer = AnswerSerializer(answers, many=True)
+    return Response({'answer':serializer_answer.data}, status=status.HTTP_200_OK)
+
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def answer(request, user_uuid):
@@ -160,12 +169,10 @@ def answer(request, user_uuid):
         user_answer = UserAnswer.objects.get(user_uuid=user_uuid)
     except UserAnswer.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    
+    # import pdb; pdb.set_trace()
     recieved_data = request.data
     question = Question.objects.get(id=recieved_data.get('question'))
-    # if question.qestion_type == '3':
-    #     recieved_data.update({'user_answer': ';'.join(recieved_data.get('user_answer'))})
-    # question_id, answer
+    
     serializer_answer = AnswerSerializer(data=recieved_data)
     if serializer_answer.is_valid():
         ans = serializer_answer.save()
@@ -183,8 +190,19 @@ def answer(request, user_uuid):
         serializer_quiestion = QuestionSerializer(question)
     else:
         return Response({'finished': 'Test is finished'}, status=status.HTTP_200_OK)
-
     return Response({'user_answer': serializer_user_answer.data, 'question': serializer_quiestion.data}, status=status.HTTP_200_OK)    
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_user_answers_list(request):
+    """ Получить список ответов пользователя на опрос """
+    user_answers = UserAnswer.objects.all()
+    serializer_user_answers = UserAnswerSerializer(user_answers, many=True)
+    return Response({'user answers':serializer_user_answers.data}, status=status.HTTP_200_OK)
+
+
+
 # class QuestionList(generics.ListAPIView):
 #     serializer_class = QuestionSerializer
 #     queryset = Question.objects.all()
@@ -203,46 +221,46 @@ def answer(request, user_uuid):
 #     permission_classes = [permissions.IsAdminUser]
 
 
-class AnswerCreate(generics.CreateAPIView):
-    serializer_class = AnswerSerializer
-    queryset = Answer.objects.all()
+# class AnswerCreate(generics.CreateAPIView):
+#     serializer_class = AnswerSerializer
+#     queryset = Answer.objects.all()
 
 
-class AnswerList(generics.ListAPIView):
-    serializer_class = AnswerSerializer
-    queryset = Answer.objects.all()
+# class AnswerList(generics.ListAPIView):
+#     serializer_class = AnswerSerializer
+#     queryset = Answer.objects.all()
 
-    def get_queryset(self):
-        if self.request.user.is_staff:
-            answer = Answer.objects.all()
-            return answer
-        else:
-            user = self.request.user
-            answer = Answer.objects.filter(user=user)
-            return answer
-
-
-class AnswerDetail(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = AnswerSerializer
-    queryset = Answer.objects.all() 
+#     def get_queryset(self):
+#         if self.request.user.is_staff:
+#             answer = Answer.objects.all()
+#             return answer
+#         else:
+#             user = self.request.user
+#             answer = Answer.objects.filter(user=user)
+#             return answer
 
 
-@api_view(['GET', 'POST'])
-def add_answer(request):
-    if request.method == 'GET':
-        answers = Answer.objects.all()
-        serializers_answer = AnswerSerializer(answers, many=True)
-        return Response({'result':serializers_answer.data}, status=status.HTTP_200_OK)
-    return Response(serializers_answer.errors, status=status.HTTP_400_BAD_REQUEST)    
+# class AnswerDetail(generics.RetrieveUpdateDestroyAPIView):
+#     serializer_class = AnswerSerializer
+#     queryset = Answer.objects.all() 
 
-    if request.method == 'POST':
-        if request.user:
-            user_id = request.user.id
-            surv_id = Survey.objects.get(id=id)
-            question = Question.objects.get(id=id)
-            serializers_answer = AnswerSerializer(user_id, surv_id)
-            return Response({'result':serializers_answer.data}, status=status.HTTP_200_OK)
-    return Response(serializers_answer.errors, status=status.HTTP_400_BAD_REQUEST)    
+
+# @api_view(['GET', 'POST'])
+# def add_answer(request):
+#     if request.method == 'GET':
+#         answers = Answer.objects.all()
+#         serializers_answer = AnswerSerializer(answers, many=True)
+#         return Response({'result':serializers_answer.data}, status=status.HTTP_200_OK)
+#     return Response(serializers_answer.errors, status=status.HTTP_400_BAD_REQUEST)    
+
+#     if request.method == 'POST':
+#         if request.user:
+#             user_id = request.user.id
+#             surv_id = Survey.objects.get(id=id)
+#             question = Question.objects.get(id=id)
+#             serializers_answer = AnswerSerializer(user_id, surv_id)
+#             return Response({'result':serializers_answer.data}, status=status.HTTP_200_OK)
+#     return Response(serializers_answer.errors, status=status.HTTP_400_BAD_REQUEST)    
 
 
 # class SurveyList(generics.ListAPIView):
