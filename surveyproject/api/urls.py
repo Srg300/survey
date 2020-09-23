@@ -3,13 +3,13 @@ from .views import *
 from . import views
 
 urlpatterns = [
-    path('surveys/', SurveyList.as_view()),
-    path('survey/<int:pk>/', SurveyDetail.as_view()),
-    path('survey/create/', SurveyCreate.as_view()),
+    path('surveys/', views.get_survey_list),
+    path('survey/<int:surv_id>/', views.get_update_or_delete_survey),
+    path('survey/create/', views.create_survey),
 
-    path('questions/', QuestionList.as_view()),
-    path('question/<int:pk>/', QuestionDetail.as_view()),
-    path('question/create/', QuestionCreate.as_view()),
+    path('questions/', views.get_questions_list),
+    path('question/<int:question_id>/', views.get_update_or_delete_question),
+    path('question/create/', views.get_or_create_question),
 
     path('answer/add/', AnswerCreate.as_view()),
     path('answers/', AnswerList.as_view()),

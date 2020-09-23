@@ -1,6 +1,6 @@
 from rest_framework import serializers, fields
 from django.contrib.auth.models import User
-from .models import Question, Answer, Survey
+from .models import Question, Answer, Survey, UserAnswer
 
 
 
@@ -18,27 +18,32 @@ class SurveyListSerializer(serializers.ModelSerializer):
 
 
 class SurveyDetailSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Survey
         fields = ['id', 'title', 'discription', 'is_active', 'start_date', 'end_date', 'questions' ]
-        # ReadOnlyField = ['start_date']
 
 
-class QuestionListSerializer(serializers.ModelSerializer):
+class SurveyUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Survey
+        fields = ['title', 'discription', 'is_active', 'end_date', 'questions' ]
+
+
+
+class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = ['title', 'type_question']
 
 
-class AnswerDetailSerializer(serializers.ModelSerializer):
+class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
-        fields = ['user', 'survey', 'question', 'answer']
+        fields = ['question', 'answer']
 
 
-class AnswerCreateSerializer(serializers.ModelSerializer):
+class UserAnswerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Answer
-        fields = ['user', 'survey', 'question', 'answer']
+        model = UserAnswer
+        fields = ['id', 'survey', 'answers', 'is_finish']
 
