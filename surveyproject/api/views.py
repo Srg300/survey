@@ -144,10 +144,11 @@ def choose_surveу(request, survey_id):
     # Теперь нужно вернуть 1 вопрос
     serializer_user_answer = UserAnswerSerializer(user_answer)
     question_id = user_answer.check_available_questions()
-
+    # Проверяем, если существует вопрос, то выводим его 
     if question_id is not None:
         question = Question.objects.get(id=question_id)
         serializer_quiestion = QuestionSerializer(question)
+    # Если вопросов нет, то заканчиваем цикл статусом 200     
     else:
         return Response({'finished': 'Test is finished'}, status=status.HTTP_200_OK)
     return Response({'user_answer': serializer_user_answer.data, 'question': serializer_quiestion.data}, status=status.HTTP_200_OK)
