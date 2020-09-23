@@ -9,7 +9,7 @@ class Question(models.Model):
     ('pick many', 'ответ с выбором нескольких вариантов'),
     ]
     title = models.CharField(max_length=500, default='', blank=True)
-    type_question = models.CharField(max_length=100,choices=QUESTION_TYPES, default=[0][0]) 
+    type_question = models.CharField(max_length=100,choices=QUESTION_TYPES, default='string type') 
     
     def __str__(self):
         return self.title

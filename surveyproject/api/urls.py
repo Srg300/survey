@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('surveys/', SurveyList.as_view()),
-    path('survey/<int:pk>', SurveyDetail.as_view()),
+    path('survey/<int:pk>/', SurveyDetail.as_view()),
     path('survey/create/', SurveyCreate.as_view()),
 
     path('questions/', QuestionList.as_view()),

@@ -28,7 +28,7 @@ class SurveyDetailSerializer(serializers.ModelSerializer):
 class QuestionListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ['user_id', 'surv_id', 'question', 'answer']
+        fields = ['title', 'type_question']
 
 
 class AnswerDetailSerializer(serializers.ModelSerializer):
