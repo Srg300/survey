@@ -15,48 +15,90 @@ Content-Type: application/json
 
 Создание вопросов:
 метод POST
-end point: */api/question/create/
+end point: `*/api/question/create/`
 доступен с 2 полями строковоми полями title и type_question
-варианты для type_question: 'string type'- ответ текстом, 
-                             'pick one' - ответ с выбором одного варианта
-                             'pick many' - ответ с выбором нескольких вариантов
+варианты для type_question: 
+
+ - 'string type'- ответ текстом, 
+ - 'pick one' - ответ с выбором одного варианта  
+ - 'pick many' - ответ с выбором нескольких вариантов
+
 Пример:
-{
-    "title": "", 
-    "type_question": "string type"
-}
+
+    {
+        "title": "", 
+        "type_question": "string type"
+    }
 
 Список всех вопросов:
 метод GET
-end point: */api/questions/
+end point: `*/api/questions/`
 Получаем список внутри которого все вопросы в словаре
 Пример:
-[
-    {
-        "title": "Вопрос номер 1",
-        "type_question": "string type"
-    },
-  ...
-    {
-        "title": "Вопрос номер 2",
-        "type_question": "string type"
-    }
-]
+
+    [
+        {
+            "title": "Вопрос номер 1",
+            "type_question": "string type"
+        },
+      ...
+        {
+            "title": "Вопрос номер 2",
+            "type_question": "string type"
+        }
+    ]
 
 Редактирование, удаление, обновление вопроса по ID:
 метод GET, POST, PUT, PATCH, DELETE
-end point: */api/question/<int:pk>/
+end point: `*/api/question/<int:pk>/`
 Пример:
-{
-    "title": "Вопрос номер 1",
-    "type_question": "string type"
-}
+
+    {
+        "title": "Вопрос номер 1",
+        "type_question": "string type"
+    }
 
 Доступ к списку опросников
 метод GET
-*/api/surveys/
+end point:  `*/api/surveys/`
 Пример:
-[
+
+    [
+        {
+            "id": 1,
+            "title": "Опросник 1",
+            "discription": "для тестирования",
+            "is_active": true,
+            "start_date": "23.09.2020 05:51",
+            "end_date": "23.09.2020 12:40",
+            "questions": [
+                {
+                    "id": 1,
+                    "title": "Вопрос номер 1",
+                    "type_question": "string type"
+                },
+                {
+                    "id": 2,
+                    "title": "Вопрос номер 2",
+                    "type_question": "pick one"
+                },
+                {
+                    "id": 3,
+                    "title": "Вопрос 3. Выбиретие один из ответов. 1) A; 2) B; 3) C;",
+                    "type_question": "pick many"
+                }
+            ]
+        },
+        ...
+    ]
+
+Редактирование, удаление, обновление опросника по ID:
+метод GET, POST, PUT, PATCH, DELETE
+end point: `*api/survey/<int:pk>/`
+Пример:
+Метод GET
+В методе GET мы получаем все поля. В поле questions у нас список вопросов, доступные по id
+
     {
         "id": 1,
         "title": "Опросник 1",
@@ -65,62 +107,29 @@ end point: */api/question/<int:pk>/
         "start_date": "23.09.2020 05:51",
         "end_date": "23.09.2020 12:40",
         "questions": [
-            {
-                "id": 1,
-                "title": "Вопрос номер 1",
-                "type_question": "string type"
-            },
-            {
-                "id": 2,
-                "title": "Вопрос номер 2",
-                "type_question": "pick one"
-            },
-            {
-                "id": 3,
-                "title": "Вопрос 3. Выбиретие один из ответов. 1) A; 2) B; 3) C;",
-                "type_question": "pick many"
-            }
+            1,
+            2,
+            3
         ]
-    },
-    ...
-]
-
-Редактирование, удаление, обновление опросника по ID:
-метод GET, POST, PUT, PATCH, DELETE
-end point: *api/survey/<int:pk>/
-Пример:
-Метод GET
-В методе GET мы получаем все поля. В поле questions у нас список вопросов, доступные по id
-{
-    "id": 1,
-    "title": "Опросник 1",
-    "discription": "для тестирования",
-    "is_active": true,
-    "start_date": "23.09.2020 05:51",
-    "end_date": "23.09.2020 12:40",
-    "questions": [
-        1,
-        2,
-        3
-    ]
-}
+    }
 
 
 Создание постов
 Метод POST
-end point: *api/survey/create/
+end point: `*api/survey/create/`
 Поле questions это список вопросов, в него требуется добавить id вопроса для заполнения
 Пример:
-{
-    "id": 1,
-    "title": "Опросник 1",
-    "discription": "для тестирования",
-    "is_active": true,
-    "start_date": "23.09.2020 05:51", - создаются автоматически
-    "end_date": "23.09.2020 12:40",   - создаются автоматически
-    "questions": [
-        1,
-        2,
-        3
-    ]
-}
+
+    {
+        "id": 1,
+        "title": "Опросник 1",
+        "discription": "для тестирования",
+        "is_active": true,
+        "start_date": "23.09.2020 05:51", - создаются автоматически
+        "end_date": "23.09.2020 12:40",   - создаются автоматически
+        "questions": [
+            1,
+            2,
+            3
+        ]
+    }
