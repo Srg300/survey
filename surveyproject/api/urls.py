@@ -15,7 +15,5 @@ urlpatterns = [
     path('answers/', AnswerList.as_view()),
     path('answer/<int:pk>/', AnswerDetail.as_view()),
 
-    path('answer/add1/', views.add_answer),
 
-    path('survey-list/', views.get_survey_list),
 ]
