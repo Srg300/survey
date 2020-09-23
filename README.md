@@ -50,7 +50,7 @@ end point: `*/api/questions/`
 
 Редактирование, удаление, обновление вопроса по ID:
 метод GET, POST, PUT, PATCH, DELETE
-end point: `*/api/question/<int:pk>/`
+end point: `*/api/question/<int:question_id>/`
 Пример:
 
     {
@@ -94,7 +94,7 @@ end point:  `*/api/surveys/`
 
 Редактирование, удаление, обновление опросника по ID:
 метод GET, POST, PUT, PATCH, DELETE
-end point: `*api/survey/<int:pk>/`
+end point: `*api/survey/<int:surv_id>/`
 Пример:
 Метод GET
 В методе GET мы получаем все поля. В поле questions у нас список вопросов, доступные по id
@@ -125,7 +125,6 @@ end point: `*api/survey/create/`
         "title": "Опросник 1",
         "discription": "для тестирования",
         "is_active": true,
-        "start_date": "23.09.2020 05:51", - создаются автоматически
         "end_date": "23.09.2020 12:40",   - создаются автоматически
         "questions": [
             1,
@@ -133,3 +132,4 @@ end point: `*api/survey/create/`
             3
         ]
     }
+
