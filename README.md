@@ -1,9 +1,6 @@
 
 # survey
 
-# инструкция по разворачиванию приложения
-
-Создаем виртуальное окружение с именем: venv_survey Устанавливаем необходимые библиотеки командой: pip install -r requirements.txt Скачиваем проект в ту же директорию, что и папка venv_survey командой: git clone [https://github.com/Srg300/survey.git](https://github.com/Srg300/survey.git) Проект работает на БД SQLite. Для запуска требуется скопировать файл db.sqlite3 в директорию surveyproject/ рядом с файлом manage.py Создать миграции python manage.py makemigrations Сделать миграции python manage.py migrate Создать суперюзера: python manage.py createsuperuser
 
 # документация по API
 
